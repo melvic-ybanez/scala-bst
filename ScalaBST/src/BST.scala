@@ -83,12 +83,9 @@ case class NonEmptyBST[A <% Ordered[A]](elem: A, left: BST[A], right: BST[A]) ex
   def flatMap[B <% Ordered[B]](f: A => BST[B]) = preOrder(f(elem))((e, acc) => acc ++ f(e))
   def map[B <% Ordered[B]](f: A => B) = preOrder[BST[B]](BST(f(elem)))((e, acc) => acc + f(e))
   
-  def inOrder[B](z: B)(f: (A, B) => B) = 
-    right.inOrder(f(elem, left.inOrder(z)(f)))(f)
-  def preOrder[B](z: B)(f: (A, B) => B) = 
-    right.preOrder(left.preOrder(f(elem, z))(f))(f)    
-  def postOrder[B](z: B)(f: (A, B) => B) = 
-    f(elem, right.postOrder(left.postOrder(z)(f))(f))
+  def inOrder[B](z: B)(f: (A, B) => B) = right.inOrder(f(elem, left.inOrder(z)(f)))(f)
+  def preOrder[B](z: B)(f: (A, B) => B) = right.preOrder(left.preOrder(f(elem, z))(f))(f)    
+  def postOrder[B](z: B)(f: (A, B) => B) = f(elem, right.postOrder(left.postOrder(z)(f))(f))
   
   def levelOrder[B](z: B)(f: (A, B) => B) = {
     def recurse(acc: B, queue: Queue[BST[A]]): B = queue match {
