@@ -1,4 +1,4 @@
 scala-bst
 =========
 
-A purely functional implementation of a Binary Search Tree in Scala
+An implementation of an immutable Binary Search Tree Monad in Scala
