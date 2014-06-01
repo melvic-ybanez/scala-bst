@@ -18,6 +18,15 @@ object Main {
     println("Remove 6: " + opt.getOrElse("Not found"))
     println("Rest of bst...")
     printTraversals(bst1)
+    
+    // to check if it's a monad    
+    def f(x: Int) = BST(x + 1)
+    def g(x: Int) = BST(x + 2)
+    println()
+    println("map and flatMap: " + (bst.map(_ + 1) == bst.flatMap(x => BST(x + 1))))
+    println("Associativity: " + (bst.flatMap(f).flatMap(g) == bst.flatMap(x => f(x).flatMap(g))))
+    println("Left Unit: " + (BST(1).flatMap(f) == f(1)))
+    println("Right Unit: " + (bst.flatMap(BST(_)) == bst))
   }
   
   def printTraversals[T](bst: BST[T]) = {
